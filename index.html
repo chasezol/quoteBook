@@ -1,0 +1,50 @@
+<!doctype html>
+<html ng-app="quoteBook">
+	<head>
+		  <link rel="stylesheet" href="style.css"/>
+	</head>
+ 
+	<body ng-controller="mainController">
+	    <button ng-click="showQuote = !showQuote">Toggle Quote</button>
+	    <button ng-click="showFilter = !showFilter">Toggle Filter</button>
+	    <div>
+	    	<form name="newQuoteForm" ng-show="showQuote">
+				<fieldset>
+					<h3>New Quote</h3>
+					<div>
+						<label for="author">Author</label>
+						<input id="author" type="text" ng-model="newQuote.author" required/>
+					</div>
+					<div>
+						<label for="text">Text</label>
+						<input id="text" type="text" ng-model="newQuote.text" required/>
+					</div>
+					<button ng-click="dataService.addData(newQuote)" ng-disabled="newQuoteForm.$invalid">Add Quote</button>
+				</fieldset>
+	    	</form>
+	    	<form ng-show="showFilter" name="newFilter">
+				<fieldset>
+					<h3>Filter</h3>
+					<div>
+						<label for="label">Filter</label>
+						<input ng-model="filterText" type="text"/>
+					</div>
+				</fieldset>
+	    	</form>
+	    	<ul>
+	    		<li ng-repeat="quote in displayQuotes | filter:filterText | orderBy:'author'">
+	    			<div>
+	    				{{ quote.author}}: "{{ quote.text }}"
+	    			</div>
+	    			<button ng-click="dataService.removeData(quote.text)">Remove</button>
+	    		</li>
+	    	</ul>
+		    <br />
+
+		</div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/MainController.js"></script>
+    <script src="js/dataService.js"></script>
+	</body>
+</html>
